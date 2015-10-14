@@ -1,0 +1,11 @@
+server {
+    listen		    80;
+
+    server_name		[project].loc;
+    root            /srv/www/symfony/[project];
+
+    access_log		/var/log/nginx/[project].loc.access_log;
+    error_log		/var/log/nginx/[project].loc.error_log;
+
+    include apps/symfony/base.conf;
+}

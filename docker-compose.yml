@@ -1,0 +1,86 @@
+sitesdata:
+  image: pro100coder/enviroment:datastore-sites
+
+mariadbdata:
+  image: pro100coder/enviroment:datastore-mariadb
+
+postgresdata:
+  image: pro100coder/enviroment:datastore-postgres
+
+solrdata:
+  image: pro100coder/enviroment:datastore-solr
+
+ssh:
+  image: pro100coder/enviroment:ssh
+  ports:
+   - 0.0.0.0:10022:22
+  volumes_from:
+   - sitesdata
+  links:
+   - mariadb:mariadb
+   - postgres:postgres
+   - memcached:memcached
+   - solr:solr
+
+solr:
+  image: pro100coder/enviroment:solr
+  volumes_from:
+    - solrdata
+
+php55:
+  image: pro100coder/enviroment:php-5.5
+  volumes_from:
+   - sitesdata
+  links:
+   - mariadb:mariadb
+   - postgres:postgres
+   - memcached:memcached
+   - solr:solr
+
+php52:
+  image: pro100coder/enviroment:php-v5.2
+  volumes_from:
+   - sitesdata
+  links:
+   - mariadb:mariadb
+   - postgres:postgres
+   - memcached:memcached
+   - solr:solr
+
+nginx:
+  image: pro100coder/enviroment:nginx
+  ports:
+   - 80:80
+  links:
+   - php55:php55
+   - php52:php52
+  volumes_from:
+   - sitesdata
+
+mariadb:
+  image: pro100coder/enviroment:mariadb
+  environment:
+   - MYSQL_ROOT_PASSWORD=root
+  ports:
+   - 3306:3306
+  volumes_from:
+   - mariadbdata
+
+postgres:
+  image: postgres:9.3
+  environment:
+   - POSTGRES_PASSWORD=postgres
+  ports:
+   - 5432:5432
+  volumes_from:
+   - postgresdata
+
+memcached:
+  image: memcached:1.4
+
+nfs:
+  image: pro100coder/enviroment:nfs
+  command: /srv/www
+  privileged: true
+  volumes_from:
+   - sitesdata

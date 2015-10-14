@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+
+mounts=(${@})
+
+HOSTS="${HOSTS:-*}"
+PARAMS="${PARAMS:-(rw,sync,no_subtree_check,insecure,all_squash,anonuid=33,anongid=33)}"
+
+# Specify mounts via --env-file using a list of EXPORT variables
+# EXPORT1="/export 10.0.0.1(ro,sync,no_subtree_check,insecure)"
+# EXPORT2="/path/to/volume 10.0.0.2(rw,sync,no_subtree_check,insecure)"
+for EXPORTS in EXPORT{1..100}; do
+  if [[ ! -z ${!EXPORTS} ]]; then
+    echo "${!EXPORTS}" >> /etc/exports
+  fi
+done
+
+for mnt in "${mounts[@]}"; do
+  src=$(echo $mnt | awk -F':' '{ print $1 }')
+  echo "$src $HOSTS$PARAMS" >> /etc/exports
+  echo "Added: $src $HOSTS$PARAMS"
+done
+
+function clean_up {
+    service nfs-kernel-server stop
+    kill $(pidof rpcbind)
+    exit 0
+}
+trap clean_up SIGHUP SIGINT SIGTERM
+
+. /etc/default/nfs-kernel-server
+. /etc/default/nfs-common
+
+rpcbind
+service nfs-kernel-server start
+
+inotifywait -m /exports & wait
