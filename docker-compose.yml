@@ -38,7 +38,7 @@ php55:
    - solr:solr
 
 php52:
-  image: pro100coder/enviroment:php-v5.2
+  image: pro100coder/enviroment:php-5.2
   volumes_from:
    - sitesdata
   links:
