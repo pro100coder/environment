@@ -71,7 +71,7 @@ nfs:
   command: /srv/www
   privileged: true
   ports:
-   - 111:111
+   - 111:111/udp
    - 2049:2049
   volumes_from:
    - enviroment_sitesdata_1

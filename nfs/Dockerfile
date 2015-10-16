@@ -10,6 +10,6 @@ ADD nfs-kernel-server /etc/default/nfs-kernel-server
 
 VOLUME /exports
 
-EXPOSE 111/udp 111/tcp 2049/tcp 2049/udp
+EXPOSE 111/udp 2049/tcp
 
 ENTRYPOINT ["/setup"]
