@@ -1,21 +1,9 @@
-sitesdata:
-  image: pro100coder/enviroment:datastore-sites
-
-mariadbdata:
-  image: pro100coder/enviroment:datastore-mariadb
-
-postgresdata:
-  image: pro100coder/enviroment:datastore-postgres
-
-solrdata:
-  image: pro100coder/enviroment:datastore-solr
-
 ssh:
   image: pro100coder/enviroment:ssh
   ports:
    - 0.0.0.0:10022:22
   volumes_from:
-   - sitesdata
+   - enviroment_sitesdata_1
   links:
    - mariadb:mariadb
    - postgres:postgres
@@ -25,12 +13,12 @@ ssh:
 solr:
   image: pro100coder/enviroment:solr
   volumes_from:
-    - solrdata
+    - enviroment_solrdata_1
 
 php55:
   image: pro100coder/enviroment:php-5.5
   volumes_from:
-   - sitesdata
+   - enviroment_sitesdata_1
   links:
    - mariadb:mariadb
    - postgres:postgres
@@ -40,7 +28,7 @@ php55:
 php52:
   image: pro100coder/enviroment:php-5.2
   volumes_from:
-   - sitesdata
+   - enviroment_sitesdata_1
   links:
    - mariadb:mariadb
    - postgres:postgres
@@ -55,7 +43,7 @@ nginx:
    - php55:php55
    - php52:php52
   volumes_from:
-   - sitesdata
+   - enviroment_sitesdata_1
 
 mariadb:
   image: pro100coder/enviroment:mariadb
@@ -64,7 +52,7 @@ mariadb:
   ports:
    - 3306:3306
   volumes_from:
-   - mariadbdata
+   - enviroment_mariadbdata_1
 
 postgres:
   image: postgres:9.3
@@ -73,7 +61,7 @@ postgres:
   ports:
    - 5432:5432
   volumes_from:
-   - postgresdata
+   - enviroment_postgresdata_1
 
 memcached:
   image: memcached:1.4
@@ -86,4 +74,4 @@ nfs:
    - 111:111
    - 2049:2049
   volumes_from:
-   - sitesdata
+   - enviroment_sitesdata_1

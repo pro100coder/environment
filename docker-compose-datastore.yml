@@ -1,0 +1,11 @@
+sitesdata:
+  image: pro100coder/enviroment:datastore-sites
+
+mariadbdata:
+  image: pro100coder/enviroment:datastore-mariadb
+
+postgresdata:
+  image: pro100coder/enviroment:datastore-postgres
+
+solrdata:
+  image: pro100coder/enviroment:datastore-solr
