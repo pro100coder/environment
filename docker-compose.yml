@@ -82,5 +82,8 @@ nfs:
   image: pro100coder/enviroment:nfs
   command: /srv/www
   privileged: true
+  ports:
+   - 111:111
+   - 2049:2049
   volumes_from:
    - sitesdata
