@@ -15,15 +15,14 @@
 # Установка
 
 1. Устанавливаем на свою ОС [docker](https://docs.docker.com/installation/) и [docker-compose](https://docs.docker.com/compose/install)
-2. Устанавливаем [sshfs linux](https://www.digitalocean.com/community/tutorials/how-to-use-sshfs-to-mount-remote-file-systems-over-ssh)
-3. Добавляем пользователя в группу fuse (`sudo usermod -aG fuse MY_USER`)
-4. Добавляем в хосты docker-host с IP хоста докера. В ОС Linux это 127.0.0.1, для остальных операционных систем можно узнать с помощью `docker-machine ip default`
-5. Создаем папку в домашней директории `~/Projects/www-data` (для пользователей Mac OS & Linux) или `С:\Projects\www-data` (для Windows)
+4. Добавляем в хосты `docker-host` с IP хоста докера. В ОС Linux это 127.0.0.1, для остальных операционных систем можно узнать с помощью `docker-machine ip default`
 
 ## Разворачивание среды
 
 1. Отключаем если утановленны nginx, mysql и пр.
-2. Запускаем установщик `bash install.sh`
+2. Открываем консоль с Docker и Docker compose в директории данного проекта
+3. Разворачиваем контейнеры с данными `docker-compose -f docker-compose-datastore.yml up -d`. Если папка проекта названна не enviroment то ко всем коммандам `docker-compose up` следует добавить параметр `-p enviroment`
+4. Разворачиваем контейнеры со всем окружением `docker-compose up -d`
 
 # Использование
 
@@ -38,7 +37,7 @@
 # Обновление
 
 1. Забрать последние изменения проекта(`git pull`)
-2. В папке с проектом запустить `bash update.sh`
+2. В папке с проектом запустить `docker-compose up -d`
 
 ---
 ### Литература
