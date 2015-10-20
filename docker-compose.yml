@@ -66,12 +66,12 @@ postgres:
 memcached:
   image: memcached:1.4
 
-nfs:
-  image: pro100coder/enviroment:nfs
-  command: /srv/www
-  privileged: true
+samba:
+  image: pro100coder/enviroment:samba
   ports:
-   - 111:111/udp
-   - 2049:2049
+   - 137:137
+   - 138:138
+   - 139:139
+   - 445:445
   volumes_from:
    - enviroment_sitesdata_1

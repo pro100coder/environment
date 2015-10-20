@@ -53,3 +53,4 @@
 9. http://debian-help.ru/articles/xhprof-i-xdebug-profilirovanie-profiling-koda-php/
 10. /srv/www/system/xhprof/xhprof_lib
 11. /usr/local/lib/php/xhprof_lib
+12. sudo mount -t cifs //127.0.0.1/public ~/Projects/www-data -o guest,uid=YOU_GROUP,gid=YOU_USER
