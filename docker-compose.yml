@@ -15,6 +15,16 @@ solr:
   volumes_from:
     - enviroment_solrdata_1
 
+php56:
+  image: pro100coder/enviroment:php-5.6
+  volumes_from:
+   - enviroment_sitesdata_1
+  links:
+   - mariadb:mariadb
+   - postgres:postgres
+   - memcached:memcached
+   - solr:solr
+
 php55:
   image: pro100coder/enviroment:php-5.5
   volumes_from:
@@ -40,6 +50,7 @@ nginx:
   ports:
    - 80:80
   links:
+   - php56:php56
    - php55:php55
    - php52:php52
   volumes_from:
