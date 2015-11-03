@@ -3,7 +3,7 @@ FROM php:5.6-fpm
 # Install modules
 RUN \
     apt-get update && \
-    apt-get install -y g++ libicu-dev libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng12-dev libxml2-dev libcurl4-openssl-dev libpq-dev graphviz libmemcached-dev libsqlite3-dev && \
+    apt-get install -y g++ libicu-dev libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng12-dev libxml2-dev libcurl4-openssl-dev libpq-dev graphviz libmemcached-dev libsqlite3-dev php5-pinba && \
     apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
 # Install php extensions
