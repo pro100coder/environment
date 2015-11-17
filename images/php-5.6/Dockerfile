@@ -26,7 +26,7 @@ RUN \
     docker-php-ext-install pdo_mysql
 
 # Install pecl extensions
-RUN pecl install --force xdebug memcached xhprof-0.9.4
+RUN pecl install --force xdebug memcached xhprof-0.9.4 mongo
 
 # Configure
 ADD data/etc/php/php.ini /usr/local/etc/php/php.ini

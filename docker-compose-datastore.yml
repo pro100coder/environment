@@ -9,3 +9,9 @@ postgresdata:
 
 solrdata:
   image: pro100coder/enviroment:datastore-solr
+
+mongodata:
+  image: pro100coder/enviroment:datastore-mongo
+
+rabbitmqdata:
+  image: pro100coder/enviroment:datastore-rabbitmq    

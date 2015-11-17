@@ -26,7 +26,9 @@ RUN \
 # Install
 RUN \
     apt-get update && \
-    apt-get install -y postgresql-client mariadb-client nodejs openssh-server bash-completion mc git wget default-jre php5-cli php5-mcrypt php5-curl php5-mysql php5-pgsql php5-memcached php5-xdebug php5-intl php5-gd && \
+    apt-get install -y postgresql-client mariadb-client nodejs openssh-server \
+      bash-completion mc git wget default-jre php5-cli php5-mcrypt php5-curl \
+      php5-mysql php5-pgsql php5-memcached php5-xdebug php5-intl php5-gd php5-mongo && \
     apt-get -y autoclean && apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
 
 # Install nodejs
@@ -41,9 +43,8 @@ RUN \
 
 # Install drush
 RUN \
-	git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
+	git clone --branch 7.1.0 https://github.com/drush-ops/drush.git /usr/local/src/drush && \
 	cd /usr/local/src/drush && \
-	git checkout 7.0.0 && \
 	composer install && \
 	ln -s /usr/local/src/drush/drush /usr/bin/drush
 

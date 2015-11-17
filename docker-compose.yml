@@ -11,6 +11,8 @@ ssh:
     - postgres:postgres
     - memcached:memcached
     - solr:solr
+    - mongo:mongo
+    - rabbitmq:rabbitmq
 
 solr:
   image: pro100coder/enviroment:solr
@@ -30,6 +32,8 @@ php56:
     - postgres:postgres
     - memcached:memcached
     - solr:solr
+    - mongo:mongo
+    - rabbitmq:rabbitmq
 
 php55:
   image: pro100coder/enviroment:php-5.5
@@ -42,6 +46,7 @@ php55:
     - postgres:postgres
     - memcached:memcached
     - solr:solr
+    - mongo:mongo
 
 php52:
   image: pro100coder/enviroment:php-5.2
@@ -54,6 +59,8 @@ php52:
     - postgres:postgres
     - memcached:memcached
     - solr:solr
+    - mongo:mongo
+    - rabbitmq:rabbitmq
 
 nginx:
   image: pro100coder/enviroment:nginx
@@ -78,6 +85,15 @@ mariadb:
     - 3306:3306
   volumes_from:
     - enviroment_mariadbdata_1
+
+mongo:
+  image: mongo
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+  ports:
+    - 27017:27017
+  volumes_from:
+    - enviroment_mongodata_1
 
 postgres:
   image: postgres:9.3
@@ -106,3 +122,12 @@ samba:
    - 445:445
   volumes_from:
    - enviroment_sitesdata_1
+
+rabbitmq:
+  image: rabbitmq:3-management
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+  ports:
+    - 10080:15672  
+  volumes_from:
+    - enviroment_rabbitmqdata_1
