@@ -2,8 +2,8 @@ ssh:
   image: pro100coder/enviroment:ssh
   ports:
     - 0.0.0.0:10022:22
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  # volumes:
+    # - /etc/localtime:/etc/localtime:ro
   volumes_from:
     - enviroment_sitesdata_1
   links:
@@ -16,15 +16,15 @@ ssh:
 
 solr:
   image: pro100coder/enviroment:solr
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  # volumes:
+  #   - /etc/localtime:/etc/localtime:ro
   volumes_from:
     - enviroment_solrdata_1
 
 php56:
   image: pro100coder/enviroment:php-5.6
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  # volumes:
+  #   - /etc/localtime:/etc/localtime:ro
   volumes_from:
     - enviroment_sitesdata_1
   links:
@@ -37,8 +37,8 @@ php56:
 
 php55:
   image: pro100coder/enviroment:php-5.5
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  # volumes:
+  #   - /etc/localtime:/etc/localtime:ro
   volumes_from:
     - enviroment_sitesdata_1
   links:
@@ -50,8 +50,8 @@ php55:
 
 php52:
   image: pro100coder/enviroment:php-5.2
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  # volumes:
+  #   - /etc/localtime:/etc/localtime:ro
   volumes_from:
     - enviroment_sitesdata_1
   links:
@@ -64,8 +64,8 @@ php52:
 
 nginx:
   image: pro100coder/enviroment:nginx
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  # volumes:
+  #   - /etc/localtime:/etc/localtime:ro
   ports:
     - 80:80
   links:
@@ -77,8 +77,8 @@ nginx:
 
 mariadb:
   image: pro100coder/enviroment:mariadb
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  # volumes:
+  #   - /etc/localtime:/etc/localtime:ro
   environment:
     - MYSQL_ROOT_PASSWORD=root
   ports:
@@ -97,8 +97,8 @@ mongo:
 
 postgres:
   image: postgres:9.3
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  # volumes:
+  #   - /etc/localtime:/etc/localtime:ro
   environment:
     - POSTGRES_PASSWORD=postgres
   ports:
@@ -107,13 +107,13 @@ postgres:
     - enviroment_postgresdata_1
 
 memcached:
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  # volumes:
+  #   - /etc/localtime:/etc/localtime:ro
   image: memcached:1.4
 
 samba:
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  # volumes:
+  #   - /etc/localtime:/etc/localtime:ro
   image: pro100coder/enviroment:samba
   ports:
    - 137:137
