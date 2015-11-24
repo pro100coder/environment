@@ -26,9 +26,27 @@ RUN \
 # Install
 RUN \
     apt-get update && \
-    apt-get install -y postgresql-client mariadb-client nodejs openssh-server \
-      bash-completion mc git wget default-jre php5-cli php5-mcrypt php5-curl \
-      php5-mysql php5-pgsql php5-memcached php5-xdebug php5-intl php5-gd php5-mongo && \
+    apt-get install -y  \
+      postgresql-client \
+      mariadb-client    \
+      nodejs            \
+      openssh-server    \
+      bash-completion   \
+      mc                \
+      git               \
+      wget              \
+      default-jre       \
+      php5-cli          \
+      php5-mcrypt       \
+      php5-curl         \
+      php5-mysql        \
+      php5-pgsql        \
+      php5-memcached    \
+      php5-xdebug       \
+      php5-intl         \
+      php5-gd           \
+      php5-mongo        \
+      php5-sqlite       && \
     apt-get -y autoclean && apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
 
 # Install nodejs

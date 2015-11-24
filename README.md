@@ -46,7 +46,7 @@
 2. http://www.sitepoint.com/install-xdebug-phpstorm-vagrant/
 3. http://randyfay.com/content/remote-command-line-debugging-phpstorm-phpdrupal-including-drush
 4. http://randyfay.com/node/130
-5. sshfs www-data@127.0.0.1:/srv/www/symfony ~/Projects/symfony -p 10022 -oreconnect
+5. sshfs www-data@127.0.0.1:/srv/www ~/Projects/www-data -p 10022 -oreconnect
 6. fusermount -u ~/www
 7. http://stackoverflow.com/questions/14310339/using-remote-server-in-phpstorm
 8. http://osxfuse.github.io
