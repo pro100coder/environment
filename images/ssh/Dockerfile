@@ -61,10 +61,11 @@ RUN \
 
 # Install drush
 RUN \
-	git clone --branch 7.1.0 https://github.com/drush-ops/drush.git /usr/local/src/drush && \
-	cd /usr/local/src/drush && \
-	composer install && \
-	ln -s /usr/local/src/drush/drush /usr/bin/drush
+    wget http://files.drush.org/drush.phar && \
+    php drush.phar core-status && \
+    chmod +x drush.phar && \
+    mv drush.phar /usr/local/bin/drush && \
+    chown www-data:www-data /usr/local/bin/drush 
 
 # Setting php-cli for symfony
 RUN echo date.timezone = Europe/Minsk >> /etc/php5/cli/php.ini
