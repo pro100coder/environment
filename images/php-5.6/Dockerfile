@@ -8,6 +8,7 @@ RUN \
 
 # Install php extensions
 RUN \
+    docker-php-ext-install zip && \
     docker-php-ext-install pdo_sqlite && \
     docker-php-ext-install dom && \
     docker-php-ext-install intl && \
