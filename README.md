@@ -54,3 +54,26 @@
 10. /srv/www/system/xhprof/xhprof_lib
 11. /usr/local/lib/php/xhprof_lib
 12. sudo mount -t cifs //127.0.0.1/public ~/Projects/www-data -o guest,uid=YOU_GROUP,gid=YOU_USER
+
+
+server {
+    listen	80;
+
+    server_name		xhprof.loc;
+    root            /srv/www/system/xhprof/xhprof_html;
+
+    access_log		off;
+    error_log		/var/log/nginx/rnasnos.loc.error_log;
+    
+    set $php_version php56; # !! надо выставлять такуюже версию как и сайт который профилируется
+
+    index index.php;
+
+
+    location ~ \.php$ {
+      fastcgi_pass  $php_version;
+      fastcgi_index index.php;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      include  fastcgi_params;
+    }
+}
