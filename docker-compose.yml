@@ -91,7 +91,7 @@ nginx:
   dns: 172.17.0.1
   volumes:
     - /etc/localtime:/etc/localtime:ro
-    - ./configs/nginx/cnf:/etc/nginx:ro
+    - ./configs/nginx/conf:/etc/nginx:ro
   ports:
     - 80:80
   links:
