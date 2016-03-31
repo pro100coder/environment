@@ -104,9 +104,10 @@ nginx:
     - enviroment_sitesdata_1
 
 mariadb:
-  image: pro100coder/enviroment:mariadb
+  image: mariadb:10
   volumes:
     - /etc/localtime:/etc/localtime:ro
+    - ./configs/mariadb/conf.d:/etc/mysql/conf.d:ro
   environment:
     - MYSQL_ROOT_PASSWORD=root
   ports:

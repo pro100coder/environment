@@ -1,3 +1,0 @@
-NEED_STATD=no
-NEED_IDMAPD=yes
-NEED_GSSD=no
