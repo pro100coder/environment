@@ -3,7 +3,7 @@ FROM php:5.6-fpm
 # Install modules
 RUN \
     apt-get update && \
-    apt-get install -y
+    apt-get install -y \
       g++ \
       libicu-dev \
       libfreetype6-dev \
