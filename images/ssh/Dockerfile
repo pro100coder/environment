@@ -13,7 +13,9 @@ RUN \
 # Install curl and nodejs repo
 RUN \
     apt-get update && apt-get install -y curl  && \
-    curl -sL https://deb.nodesource.com/setup | bash - && \
+    curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g npm bower less && \
     apt-get -y autoclean && apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
 
 # Install RVM
@@ -29,13 +31,11 @@ RUN \
     apt-get install -y  \
       postgresql-client \
       mariadb-client    \
-      nodejs            \
       openssh-server    \
       bash-completion   \
       mc                \
       git               \
       wget              \
-      default-jre       \
       php5-cli          \
       php5-mcrypt       \
       php5-curl         \
@@ -46,11 +46,13 @@ RUN \
       php5-intl         \
       php5-gd           \
       php5-mongo        \
-      php5-sqlite       && \
-    apt-get -y autoclean && apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
-
-# Install nodejs
-RUN npm install -g bower less
+      php5-sqlite       \
+      libxml2-dev       \
+      libbz2-dev        \
+      libxslt1-dev      \
+      libicu-dev        && \
+    apt-get clean -y && apt-get autoclean -y && \
+    apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
 
 # Install composer
 RUN \
@@ -65,18 +67,27 @@ RUN \
     php drush.phar core-status && \
     chmod +x drush.phar && \
     mv drush.phar /usr/local/bin/drush && \
-    chown www-data:www-data /usr/local/bin/drush 
+    chown www-data:www-data /usr/local/bin/drush
 
 # Setting php-cli for symfony
 RUN echo date.timezone = Europe/Minsk >> /etc/php5/cli/php.ini
 
 # Problem http://goo.gl/UcMZ9a
-RUN echo KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1 >> /etc/ssh/sshd_config
+RUN echo 'KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1' >> /etc/ssh/sshd_config
+
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 # PHP cli xdebug
 ADD data/xdebug.ini /etc/php5/mods-available/xdebug.ini
 
-RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+# Install PhpBrew
+RUN \
+    curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew && \
+    chmod +x phpbrew && \
+    mv phpbrew /usr/local/bin/phpbrew && \
+    chown www-data:www-data /usr/local/bin/phpbrew && \
+    su -l www-data -c "phpbrew init" && \
+    su -l www-data -c "echo 'source ~/.phpbrew/bashrc' >> ~/.bashrc"
 
 EXPOSE 22
 

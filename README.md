@@ -2,12 +2,13 @@
 
 Данная утилита предоставляет набор docker контейнеров для быстрого разворачивание рабочего окружения PHP программиста.
 Набор программ входящих в состав:
-1. php 5.2, 5.5
+1. php 5.2, 5.5, 5.6, 7.0
 2. MariaDB, PostgreSQL
 3. Apache SOLR
 4. Nginx
 
-Так же доступны RVM, NPM и композер.
+Так же доступны RVM, NPM и композер. 
+Для смены версии в консоли используется [PhpBrew](https://github.com/phpbrew/phpbrew)
 Важно помнить что работа будет происходить не не локальной машине как все привыкли, а на виртуальной машине которая находится у вас на локальной.
 Это правило влияет на отладку скриптов и запуск комманд(drush, composer и пр).
 Все комманды должны выполнятся внутри виртуальной машины(т.е. контейнера).  
@@ -54,26 +55,3 @@
 10. /srv/www/system/xhprof/xhprof_lib
 11. /usr/local/lib/php/xhprof_lib
 12. sudo mount -t cifs //127.0.0.1/public ~/Projects/www-data -o guest,uid=YOU_GROUP,gid=YOU_USER
-
-
-server {
-    listen	80;
-
-    server_name		xhprof.loc;
-    root            /srv/www/system/xhprof/xhprof_html;
-
-    access_log		off;
-    error_log		/var/log/nginx/rnasnos.loc.error_log;
-    
-    set $php_version php56; # !! надо выставлять такуюже версию как и сайт который профилируется
-
-    index index.php;
-
-
-    location ~ \.php$ {
-      fastcgi_pass  $php_version;
-      fastcgi_index index.php;
-      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-      include  fastcgi_params;
-    }
-}

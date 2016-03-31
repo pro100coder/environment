@@ -3,12 +3,18 @@ FROM php:7.0-fpm
 # Install modules
 RUN \
     apt-get update && \
-    apt-get install -y libicu-dev libpq-dev libxml2-dev libmcrypt-dev \
-      libjpeg62-turbo-dev libpng12-dev libsqlite3-dev libcurl4-openssl-dev \
+    apt-get install -y libicu-dev \
+      libpq-dev \
+      libxml2-dev \
+      libmcrypt-dev \
+      libjpeg62-turbo-dev \
+      libpng12-dev \
+      libsqlite3-dev \
+      libcurl4-openssl-dev \
       libmemcached-dev && \
     apt-get autoremove -y && \
-    apt-get clean -y && \
-    apt-get autoclean -y && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
+    apt-get clean -y && apt-get autoclean -y && \
+    apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
 # Install php extensions
 RUN \
@@ -58,7 +64,13 @@ RUN \
     apt-get clean -y && \
     apt-get autoclean -y && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
-# Install pecl extensions
+# Install mongodb
+RUN \
+    pecl install --force mongodb && \
+    docker-php-ext-enable mongodb
+
+
+# Install igbinary
 # RUN pecl install --force igbinary && \
 #     docker-php-ext-enable memcached
 
