@@ -76,6 +76,7 @@ php70:
   dns: 172.17.0.1
   volumes:
     - /etc/localtime:/etc/localtime:ro
+    - ./configs/php/fpm-7.0/php.ini:/usr/local/etc/php/php.ini
   volumes_from:
     - enviroment_sitesdata_1
   links:

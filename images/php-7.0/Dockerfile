@@ -26,8 +26,8 @@ RUN \
     docker-php-ext-install -j$(nproc) pdo_pgsql && \
     # docker-php-ext-install soap && \
     docker-php-ext-install -j$(nproc) simplexml  && \
-    docker-php-ext-install curl && \
-    docker-php-ext-install iconv && \
+    docker-php-ext-install -j$(nproc) curl && \
+    docker-php-ext-install -j$(nproc) iconv && \
     docker-php-ext-install -j$(nproc) mcrypt && \
     docker-php-ext-configure gd --with-jpeg-dir=/tmp/jpeg -with-png-dir=/tmp/png && \
     docker-php-ext-install -j$(nproc) gd && \
@@ -44,8 +44,8 @@ RUN \
     git checkout php7 && \
     phpize && \
     ./configure --disable-memcached-sasl && \
-    make && \
-    make install && \
+    make -j$(nproc) && \
+    make install -j$(nproc) && \
     docker-php-ext-enable memcached && \
     cd .. && rm -rf php-memcached && \
 # xdebug
@@ -54,8 +54,8 @@ RUN \
     cd xdebug-2.4.0 && \
     phpize && \
     ./configure --enable-xdebug --with-php-config=/usr/local/bin/php-config && \
-    make && \
-    make install && \
+    make -j$(nproc) && \
+    make install -j$(nproc) && \
     docker-php-ext-enable xdebug && \
     cd .. && rm -rf xdebug-2.4 && \
 # clear
@@ -73,10 +73,5 @@ RUN \
 # Install igbinary
 # RUN pecl install --force igbinary && \
 #     docker-php-ext-enable memcached
-
-
-# Configure
-ADD data/etc/php/php.ini /usr/local/etc/php/php.ini
-#ADD data/etc/php-fpm.conf /usr/local/etc/php-fpm.conf
 
 CMD ["php-fpm"]
