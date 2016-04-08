@@ -15,8 +15,7 @@ RUN \
       libpq-dev \
       graphviz \
       libmemcached-dev \
-      libsqlite3-dev \
-      php5-pinba && \
+      libsqlite3-dev && \
     apt-get clean -y && apt-get autoclean -y && \
     apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
@@ -42,10 +41,12 @@ RUN \
     docker-php-ext-install -j$(nproc) pdo_mysql
 
 # Install pecl extensions
-RUN pecl install --force xdebug memcached xhprof-0.9.4 mongo
-
-# Configure
-ADD data/etc/php/php.ini /usr/local/etc/php/php.ini
-ADD data/etc/php-fpm.conf /usr/local/etc/php-fpm.conf
-
-CMD ["php-fpm"]
+RUN pecl install --force \
+      xdebug \
+      memcached \
+      xhprof \
+      mongo &&\
+    docker-php-ext-enable xdebug && \
+    docker-php-ext-enable memcached && \
+    docker-php-ext-enable xhprof && \
+    docker-php-ext-enable mongo
