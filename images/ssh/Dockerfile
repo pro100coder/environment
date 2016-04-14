@@ -33,26 +33,59 @@ RUN \
       mariadb-client    \
       openssh-server    \
       bash-completion   \
+      nano              \
       mc                \
       git               \
       wget              \
-      php5-cli          \
-      php5-mcrypt       \
-      php5-curl         \
-      php5-mysql        \
-      php5-pgsql        \
-      php5-memcached    \
-      php5-xdebug       \
-      php5-intl         \
-      php5-gd           \
-      php5-mongo        \
-      php5-sqlite       \
-      libxml2-dev       \
-      libbz2-dev        \
-      libxslt1-dev      \
-      libicu-dev        && \
+      php5-dev \
+      php-pear \
+      autoconf \
+      automake \
+      libcurl3-openssl-dev \
+      build-essential \
+      libxslt1-dev \
+      re2c \
+      libxml2 \
+      libxml2-dev \
+      php5-cli \
+      bison \
+      libbz2-dev \
+      libreadline-dev \
+      libfreetype6 \
+      libfreetype6-dev \
+      libpng12-0 \
+      libpng12-dev \
+      libjpeg-dev \
+      # libjpeg8-dev \
+      # libjpeg8  \
+      libgd-dev \
+      libgd3 \
+      libxpm4 \
+      libltdl7 \
+      libltdl-dev \
+      libssl-dev \
+      openssl \
+      gettext \
+      libgettextpo-dev \
+      libgettextpo0 \
+      libicu-dev \
+      libmhash-dev \
+      libmhash2 \
+      libmcrypt-dev \
+      libmcrypt4 && \
     apt-get clean -y && apt-get autoclean -y && \
     apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
+
+# Install PhpBrew
+RUN \
+    curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew && \
+    chmod +x phpbrew && \
+    mv phpbrew /usr/local/bin/phpbrew && \
+    chown www-data:www-data /usr/local/bin/phpbrew && \
+    su -l www-data -c "phpbrew init" && \
+    su -l www-data -c "echo 'source ~/.phpbrew/bashrc' >> ~/.bashrc" && \
+    su -l www-data -c "phpbrew install -j $(nproc) 7.0 +default +intl" && \
+    su -l www-data -c "phpbrew switch 7.0.5"
 
 # Install composer
 RUN \
@@ -76,18 +109,6 @@ RUN echo date.timezone = Europe/Minsk >> /etc/php5/cli/php.ini
 RUN echo 'KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1' >> /etc/ssh/sshd_config
 
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-
-# PHP cli xdebug
-ADD data/xdebug.ini /etc/php5/mods-available/xdebug.ini
-
-# Install PhpBrew
-RUN \
-    curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew && \
-    chmod +x phpbrew && \
-    mv phpbrew /usr/local/bin/phpbrew && \
-    chown www-data:www-data /usr/local/bin/phpbrew && \
-    su -l www-data -c "phpbrew init" && \
-    su -l www-data -c "echo 'source ~/.phpbrew/bashrc' >> ~/.bashrc"
 
 EXPOSE 22
 

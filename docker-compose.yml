@@ -6,6 +6,7 @@ ssh:
     - 0.0.0.0:10022:22
   volumes:
     - /etc/localtime:/etc/localtime:ro
+    - ./configs/ssh/php/xdebug.ini:/etc/php5/mods-available/xdebug.ini:ro
   volumes_from:
     - enviroment_sitesdata_1
   links:
