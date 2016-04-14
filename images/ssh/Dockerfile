@@ -27,52 +27,39 @@ RUN \
 
 # Install
 RUN \
-    apt-get update && \
-    apt-get install -y  \
+#php-7
+    echo "deb http://packages.dotdeb.org jessie all" > /etc/apt/sources.list.d/php-7.0.list && \
+    echo "deb-src http://packages.dotdeb.org jessie all" >> /etc/apt/sources.list.d/php-7.0.list && \
+    apt-get update && apt-get install -y wget && \
+    wget https://www.dotdeb.org/dotdeb.gpg && \
+    apt-key add dotdeb.gpg && rm -f dotdeb.gpg && \
+#Install
+    apt-get update && apt-get install -y \
       postgresql-client \
-      mariadb-client    \
-      openssh-server    \
-      bash-completion   \
-      nano              \
-      mc                \
-      git               \
-      wget              \
-      php5-dev \
-      php-pear \
-      autoconf \
-      automake \
-      libcurl3-openssl-dev \
-      build-essential \
-      libxslt1-dev \
-      re2c \
-      libxml2 \
-      libxml2-dev \
-      php5-cli \
-      bison \
-      libbz2-dev \
-      libreadline-dev \
-      libfreetype6 \
-      libfreetype6-dev \
-      libpng12-0 \
-      libpng12-dev \
-      libjpeg-dev \
-      # libjpeg8-dev \
-      # libjpeg8  \
-      libgd-dev \
-      libgd3 \
-      libxpm4 \
-      libltdl7 \
-      libltdl-dev \
-      libssl-dev \
-      openssl \
-      gettext \
-      libgettextpo-dev \
-      libgettextpo0 \
-      libicu-dev \
-      libmhash-dev \
-      libmhash2 \
-      libmcrypt-dev \
-      libmcrypt4 && \
+      mariadb-client \
+      openssh-server \
+      bash-completion \
+      nano \
+      mc \
+      git \
+      wget \
+      php7.0-cli \
+      php7.0-dev \
+      php7.0-xdebug \
+      php7.0-json \
+      php7.0-pgsql \
+      php7.0-sqlite3 \
+      php7.0-mcrypt \
+      php7.0-mongodb \
+      php7.0-intl \
+      php7.0-gd \
+      php7.0-mysql \
+      php7.0-redis \
+      php7.0-memcached \
+      php7.0-bz2 \
+      php7.0-curl \
+      php7.0-opcache \
+      php7.0-igbinary && \
     apt-get clean -y && apt-get autoclean -y && \
     apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
 
@@ -81,11 +68,7 @@ RUN \
     curl -L -O https://github.com/phpbrew/phpbrew/raw/master/phpbrew && \
     chmod +x phpbrew && \
     mv phpbrew /usr/local/bin/phpbrew && \
-    chown www-data:www-data /usr/local/bin/phpbrew && \
-    su -l www-data -c "phpbrew init" && \
-    su -l www-data -c "echo 'source ~/.phpbrew/bashrc' >> ~/.bashrc" && \
-    su -l www-data -c "phpbrew install -j $(nproc) 7.0 +default +intl" && \
-    su -l www-data -c "phpbrew switch 7.0.5"
+    chown www-data:www-data /usr/local/bin/phpbrew
 
 # Install composer
 RUN \
@@ -103,7 +86,7 @@ RUN \
     chown www-data:www-data /usr/local/bin/drush
 
 # Setting php-cli for symfony
-RUN echo date.timezone = Europe/Minsk >> /etc/php5/cli/php.ini
+RUN echo "date.timezone = Europe/Minsk" >> /etc/php/7.0/cli/php.ini
 
 # Problem http://goo.gl/UcMZ9a
 RUN echo 'KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group1-sha1' >> /etc/ssh/sshd_config
