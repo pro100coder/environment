@@ -20,11 +20,11 @@ RUN \
 RUN \
     docker-php-ext-install -j$(nproc) pdo_sqlite && \
     docker-php-ext-install -j$(nproc) zip && \
+    docker-php-ext-enable zip && \
     docker-php-ext-install -j$(nproc) intl && \
     docker-php-ext-install -j$(nproc) opcache && \
     docker-php-ext-install -j$(nproc) phar && \
     docker-php-ext-install -j$(nproc) pdo_pgsql && \
-    # docker-php-ext-install soap && \
     docker-php-ext-install -j$(nproc) simplexml  && \
     docker-php-ext-install -j$(nproc) curl && \
     docker-php-ext-install -j$(nproc) iconv && \
@@ -68,7 +68,6 @@ RUN \
 RUN \
     pecl install --force mongodb && \
     docker-php-ext-enable mongodb
-
 
 # Install igbinary
 # RUN pecl install --force igbinary && \
