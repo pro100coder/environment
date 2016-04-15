@@ -19,10 +19,10 @@ RUN \
 # Install php extensions
 RUN \
     docker-php-ext-install -j$(nproc) pdo_sqlite && \
-    # docker-php-ext-install dom && \
+    docker-php-ext-install -j$(nproc) zip && \
     docker-php-ext-install -j$(nproc) intl && \
-    docker-php-ext-install opcache && \
-    # docker-php-ext-install phar && \
+    docker-php-ext-install -j$(nproc) opcache && \
+    docker-php-ext-install -j$(nproc) phar && \
     docker-php-ext-install -j$(nproc) pdo_pgsql && \
     # docker-php-ext-install soap && \
     docker-php-ext-install -j$(nproc) simplexml  && \
