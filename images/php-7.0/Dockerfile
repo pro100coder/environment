@@ -20,7 +20,6 @@ RUN \
 RUN \
     docker-php-ext-install -j$(nproc) pdo_sqlite && \
     docker-php-ext-install -j$(nproc) zip && \
-    docker-php-ext-enable zip && \
     docker-php-ext-install -j$(nproc) intl && \
     docker-php-ext-install -j$(nproc) opcache && \
     docker-php-ext-install -j$(nproc) phar && \
