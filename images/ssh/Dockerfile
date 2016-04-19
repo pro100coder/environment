@@ -59,6 +59,7 @@ RUN \
       php7.0-bz2 \
       php7.0-curl \
       php7.0-opcache \
+      php7.0-zip \
       php7.0-igbinary && \
     apt-get clean -y && apt-get autoclean -y && \
     apt-get -y autoremove && rm -rf /var/lib/apt/lists/*

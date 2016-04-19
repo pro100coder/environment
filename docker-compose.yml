@@ -31,6 +31,7 @@ php56:
   volumes:
     - /etc/localtime:/etc/localtime:ro
     - ./configs/php/fpm-5.6/php.ini:/usr/local/etc/php/php.ini
+    - ./configs/php/fpm-5.6/extensions/ioncube_loader_lin_5.6.so:/usr/local/lib/php/extensions/ioncube_loader_lin_5.6.so:ro
   volumes_from:
     - enviroment_sitesdata_1
   links:
