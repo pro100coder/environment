@@ -7,7 +7,7 @@
 3. Apache SOLR
 4. Nginx
 
-Так же доступны RVM, NPM и композер. 
+Так же доступны RVM, NPM и композер.
 Для смены версии в консоли используется [PhpBrew](https://github.com/phpbrew/phpbrew)
 Важно помнить что работа будет происходить не не локальной машине как все привыкли, а на виртуальной машине которая находится у вас на локальной.
 Это правило влияет на отладку скриптов и запуск комманд(drush, composer и пр).
@@ -48,10 +48,11 @@
 3. http://randyfay.com/content/remote-command-line-debugging-phpstorm-phpdrupal-including-drush
 4. http://randyfay.com/node/130
 5. sshfs www-data@127.0.0.1:/srv/www ~/Projects/www-data -p 10022 -oreconnect
-6. fusermount -u ~/www
+6. fusermount -u ~/Projects/www-data
 7. http://stackoverflow.com/questions/14310339/using-remote-server-in-phpstorm
 8. http://osxfuse.github.io
 9. http://debian-help.ru/articles/xhprof-i-xdebug-profilirovanie-profiling-koda-php/
 10. /srv/www/system/xhprof/xhprof_lib
 11. /usr/local/lib/php/xhprof_lib
 12. sudo mount -t cifs //127.0.0.1/public ~/Projects/www-data -o guest,uid=YOU_GROUP,gid=YOU_USER
+13. sudo umount -l ~/Projects/www-data

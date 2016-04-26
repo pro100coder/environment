@@ -1,1 +1,0 @@
-export PATH=/srv/www/.npm-packages/lib/node_modules/grunt-cli/bin:$PATH
