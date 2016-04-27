@@ -20,12 +20,15 @@
 
 ## Разворачивание среды
 
-1. Отключаем если утановленны nginx, mysql и пр.
-2. Открываем консоль с Docker и Docker compose в директории данного проекта
-3. Разворачиваем контейнеры с данными `docker-compose -f docker-compose-datastore.yml up -d`. Если папка проекта названна не enviroment то ко всем коммандам `docker-compose up` следует добавить параметр `-p enviroment`
-4. Разворачиваем контейнеры со всем окружением `docker-compose up -d`
+1. Клонируем репозиторий себе на компьютер(для Win и Mac обязательно внутрь директории `C:\User` и `/Users` [читать](https://docs.docker.com/engine/userguide/containers/dockervolumes/#mount-a-host-directory-as-a-data-volume))
+2. Отключаем если утановленны nginx, mysql и пр.
+3. Открываем консоль с Docker и Docker compose в директории данного проекта
+4. Разворачиваем контейнеры с данными `docker-compose -f docker-compose-datastore.yml up -d`. Если папка проекта названна не enviroment то ко всем коммандам `docker-compose up` следует добавить параметр `-p enviroment`
+5. Разворачиваем контейнеры со всем окружением `docker-compose up -d`
 
 # Использование
+
+Первым делом необходимо примонтировать директорию с данными с помощью Samba или SSHFS. Samba подключается по адресу `\\IP_DOCKER_HOST\public`. SSHFS подключается с помощью комманды `sshfs www-data@127.0.0.1:/srv/www ~/Projects/www-data -p 10022 -oreconnect`.
 
 ## Подключение к БД и пр. сервисам
 
@@ -34,6 +37,7 @@
 
 ## Добавление конфигурации nginx
 
+Конфигурацию следует
 
 # Обновление
 
@@ -41,7 +45,7 @@
 2. В папке с проектом запустить `docker-compose up -d`
 
 ---
-### Литература
+### Хлам
 
 1. Настройка автоматической синхронизации http://goo.gl/kL2xno
 2. http://www.sitepoint.com/install-xdebug-phpstorm-vagrant/
