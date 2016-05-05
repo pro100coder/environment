@@ -60,7 +60,17 @@ RUN \
       php7.0-curl \
       php7.0-opcache \
       php7.0-zip \
-      php7.0-igbinary && \
+      php7.0-igbinary \
+# phpbrew libraries
+      libxml2-dev \
+      libmcrypt-dev \
+      libbz2-dev \
+      libmhash-dev \
+      libmhash2 \
+      libxslt1-dev \
+      libmemcached-dev \
+      libgd2-xpm-dev \
+      libpq-dev && \
     apt-get clean -y && apt-get autoclean -y && \
     apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
 
