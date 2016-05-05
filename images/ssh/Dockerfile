@@ -59,7 +59,7 @@ RUN \
       php7.0-bz2 \
       php7.0-curl \
       php7.0-opcache \
-      php7.0-zip \
+#      php7.0-zip \
       php7.0-igbinary \
 # phpbrew libraries
       libxml2-dev \
