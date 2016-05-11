@@ -70,6 +70,7 @@ RUN \
       libxslt1-dev \
       libmemcached-dev \
       libgd2-xpm-dev \
+      libcurl4-openssl-dev \
       libpq-dev && \
     apt-get clean -y && apt-get autoclean -y && \
     apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
