@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Default
+source /etc/skel/.bashrc
+
 # PHPBrew
 if ! [ -d ~/.phpbrew ]; then
       phpbrew init;
