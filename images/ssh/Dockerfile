@@ -15,7 +15,9 @@ RUN \
     apt-get update && apt-get install -y curl  && \
     curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
     apt-get install -y nodejs && \
-    npm install -g npm bower less && \
+    npm install -g npm && \
+    mkdir -p $(npm config get prefix)/{lib/node_modules,bin,share} && \
+    chown -R www-data:www-data $(npm config get prefix)/{lib/node_modules,bin,share} && \
     apt-get -y autoclean && apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
 
 # Install RVM
@@ -71,6 +73,7 @@ RUN \
       libmemcached-dev \
       libgd2-xpm-dev \
       libcurl4-openssl-dev \
+      libicu-dev \
       libpq-dev && \
     apt-get clean -y && apt-get autoclean -y && \
     apt-get -y autoremove && rm -rf /var/lib/apt/lists/*
