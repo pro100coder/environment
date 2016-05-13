@@ -24,7 +24,7 @@ RUN \
     docker-php-ext-install -j$(nproc) sockets && \
     docker-php-ext-install -j$(nproc) zip && \
     docker-php-ext-install -j$(nproc) pdo_sqlite && \
-    # docker-php-ext-install dom && \
+    docker-php-ext-install -j$(nproc) bcmath && \
     docker-php-ext-install -j$(nproc) intl && \
     docker-php-ext-install -j$(nproc) opcache && \
     # docker-php-ext-install phar && \
