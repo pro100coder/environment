@@ -1,3 +1,10 @@
+echo ""
+echo "|||||||||||||||||||||||||||||||||"
+echo "|||||||||| WORK HARD ||||||||||||"
+echo "|||||||||| PLAY HARD ||||||||||||"
+echo "|||||||||||||||||||||||||||||||||"
+echo ""
+
 # PHPBrew
 if ! [ -d ~/.phpbrew ]; then
       phpbrew init;
