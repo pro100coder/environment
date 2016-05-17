@@ -8,7 +8,7 @@ ssh:
     - /etc/localtime:/etc/localtime:ro
     - ./configs/ssh/php/php.ini:/etc/php/7.0/cli/php.ini:ro
     - ./configs/ssh/php/conf.d/xdebug.ini:/etc/php/7.0/cli/conf.d/20-xdebug.ini:ro
-    - ./configs/ssh/.bashrc:/srv/www/.profile:ro
+    - ./configs/ssh/.profile:/srv/www/.profile:ro
   volumes_from:
     - enviroment_sitesdata_1
   links:
