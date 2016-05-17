@@ -1,8 +1,3 @@
-#!/usr/bin/env bash
-
-# Default
-source /etc/skel/.bashrc
-
 # PHPBrew
 if ! [ -d ~/.phpbrew ]; then
       phpbrew init;
@@ -15,3 +10,6 @@ if ! [ -d ~/.npm-global ]; then
       npm config set prefix '~/.npm-global';
 fi;
 export PATH=~/.npm-global/bin:$PATH
+
+# Default
+source /etc/skel/.bashrc
