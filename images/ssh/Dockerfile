@@ -45,6 +45,7 @@ RUN \
       mc \
       git \
       wget \
+# PHP 7
       php7.0-cli \
       php7.0-dev \
       php7.0-xdebug \
@@ -61,8 +62,19 @@ RUN \
       php7.0-bz2 \
       php7.0-curl \
       php7.0-opcache \
-#      php7.0-zip \
       php7.0-igbinary \
+# PHP 5
+      php5-cli \
+      php5-mcrypt \
+      php5-curl \
+      php5-mysql \
+      php5-pgsql \
+      php5-memcached \
+      php5-xdebug \
+      php5-intl \
+      php5-gd \
+      php5-mongo \
+      php5-sqlite \
 # phpbrew libraries
       libxml2-dev \
       libmcrypt-dev \
