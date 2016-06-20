@@ -33,7 +33,8 @@ RUN \
     docker-php-ext-install -j$(nproc) gd && \
     docker-php-ext-install -j$(nproc) mbstring && \
     docker-php-ext-install -j$(nproc) pdo && \
-    docker-php-ext-install -j$(nproc) pdo_mysql
+    docker-php-ext-install -j$(nproc) pdo_mysql && \
+    docker-php-ext-install -j$(nproc) bcmath
 
 # memcached
 RUN \
@@ -58,16 +59,14 @@ RUN \
     make install -j$(nproc) && \
     docker-php-ext-enable xdebug && \
     cd .. && rm -rf xdebug-2.4 && \
+# Install mongodb
+    pecl install --force mongodb && \
+    docker-php-ext-enable mongodb && \
 # clear
     apt-get purge -y git wget && \
     apt-get autoremove -y && \
     apt-get clean -y && \
     apt-get autoclean -y && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
-
-# Install mongodb
-RUN \
-    pecl install --force mongodb && \
-    docker-php-ext-enable mongodb
 
 # Install igbinary
 # RUN pecl install --force igbinary && \
