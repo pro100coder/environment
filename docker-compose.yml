@@ -1,195 +1,235 @@
-ssh:
-  image: pro100coder/enviroment:ssh
-  dns: 172.17.0.1
-  domainname: enviroment
-  ports:
-    - 0.0.0.0:10022:22
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-    - ./configs/ssh/php/php.ini:/etc/php/7.0/cli/php.ini:ro
-    - ./configs/ssh/php/conf.d/xdebug.ini:/etc/php/7.0/cli/conf.d/20-xdebug.ini:ro
-    - ./configs/ssh/.profile:/srv/www/.profile:ro
-  volumes_from:
-    - enviroment_sitesdata_1
-  links:
-    - mariadb:mariadb
-    - postgres:postgres
-    - memcached:memcached
-    - solr:solr
-    - mongo:mongo
-    - rabbitmq:rabbitmq
-    - dnsdock:dnsdock
+networks: {}
+services:
+  dnsdock:
+    image: tonistiigi/dnsdock
+    network_mode: bridge
+    ports:
+      - 172.17.0.1:53:53/udp
+    volumes:
+      - /var/run/docker.sock:/run/docker.sock:rw
+      - /etc/localtime:/etc/localtime:ro
 
-solr:
-  image: pro100coder/enviroment:solr
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  volumes_from:
-    - enviroment_solrdata_1
+  mariadb:
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    image: mariadb:10
+    network_mode: bridge
+    ports:
+      - 3306:3306
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./configs/mariadb/conf.d:/etc/mysql/conf.d:ro
+      - mariadb-data:/var/lib/mysql
 
-php56:
-  image: pro100coder/enviroment:php-5.6
-  dns: 172.17.0.1
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-    - ./configs/php/fpm-5.6/php.ini:/usr/local/etc/php/php.ini
-    - ./configs/php/fpm-5.6/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
-  volumes_from:
-    - enviroment_sitesdata_1
-  links:
-    - mariadb:mariadb
-    - postgres:postgres
-    - memcached:memcached
-    - solr:solr
-    - mongo:mongo
-    - rabbitmq:rabbitmq
-    - dnsdock:dnsdock
+  memcached:
+    image: memcached:1.4
+    network_mode: bridge
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
 
-php55:
-  image: pro100coder/enviroment:php-5.5
-  dns: 172.17.0.1
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  volumes_from:
-    - enviroment_sitesdata_1
-  links:
-    - mariadb:mariadb
-    - postgres:postgres
-    - memcached:memcached
-    - solr:solr
-    - mongo:mongo
-    - dnsdock:dnsdock
+  mongo:
+    image: mongo
+    network_mode: bridge
+    ports:
+      - 27017:27017
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - mongo-data:/data/db
 
-php52:
-  image: pro100coder/enviroment:php-5.2
-  dns: 172.17.0.1
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  volumes_from:
-    - enviroment_sitesdata_1
-  links:
-    - mariadb:mariadb
-    - postgres:postgres
-    - memcached:memcached
-    - solr:solr
-    - mongo:mongo
-    - rabbitmq:rabbitmq
-    - dnsdock:dnsdock
+  nginx:
+    dns:
+      - 172.17.0.1
+    image: nginx:1.9
+    links:
+      - php70:php70
+      - php56:php56
+      - php55:php55
+      - php52:php52
+      - dnsdock:dnsdock
+    network_mode: bridge
+    ports:
+      - 80:80
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./configs/nginx/conf:/etc/nginx:ro
+      - www-data:/srv/www
 
-php70:
-  image: pro100coder/enviroment:php-7.0
-  dns: 172.17.0.1
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-    - ./configs/php/fpm-7.0/php.ini:/usr/local/etc/php/php.ini
-  volumes_from:
-    - enviroment_sitesdata_1
-  links:
-    - mariadb:mariadb
-    - postgres:postgres
-    - memcached:memcached
-    - solr:solr
-    - mongo:mongo
-    - dnsdock:dnsdock
+  php52:
+    dns:
+      - 172.17.0.1
+    image: pro100coder/enviroment:php-5.2
+    links:
+      - mariadb:mariadb
+      - postgres:postgres
+      - memcached:memcached
+      - solr:solr
+      - mongo:mongo
+      - rabbitmq:rabbitmq
+      - dnsdock:dnsdock
+    network_mode: bridge
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - www-data:/srv/www
 
-nginx:
-  image: nginx:1.9
-  dns: 172.17.0.1
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-    - ./configs/nginx/conf:/etc/nginx:ro
-  ports:
-    - 80:80
-  links:
-    - php70:php70
-    - php56:php56
-    - php55:php55
-    - php52:php52
-    - dnsdock:dnsdock
-  volumes_from:
-    - enviroment_sitesdata_1
+  php55:
+    dns:
+      - 172.17.0.1
+    image: pro100coder/enviroment:php-5.5
+    links:
+      - mariadb:mariadb
+      - postgres:postgres
+      - memcached:memcached
+      - solr:solr
+      - mongo:mongo
+      - dnsdock:dnsdock
+    network_mode: bridge
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - www-data:/srv/www
 
-mariadb:
-  image: mariadb:10
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-    - ./configs/mariadb/conf.d:/etc/mysql/conf.d:ro
-  environment:
-    - MYSQL_ROOT_PASSWORD=root
-  ports:
-    - 3306:3306
-  volumes_from:
-    - enviroment_mariadbdata_1
+  php56:
+    dns:
+      - 172.17.0.1
+    image: pro100coder/enviroment:php-5.6
+    links:
+      - mariadb:mariadb
+      - postgres:postgres
+      - memcached:memcached
+      - solr:solr
+      - mongo:mongo
+      - rabbitmq:rabbitmq
+      - dnsdock:dnsdock
+    network_mode: bridge
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./configs/php/fpm-5.6/php.ini:/usr/local/etc/php/php.ini:rw
+      - ./configs/php/fpm-5.6/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
+      - www-data:/srv/www
 
-mongo:
-  image: mongo
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  ports:
-    - 27017:27017
-  volumes_from:
-    - enviroment_mongodata_1
+  php70:
+    dns:
+      - 172.17.0.1
+    image: pro100coder/enviroment:php-7.0
+    links:
+      - mariadb:mariadb
+      - postgres:postgres
+      - memcached:memcached
+      - solr:solr
+      - mongo:mongo
+      - dnsdock:dnsdock
+    network_mode: bridge
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./configs/php/fpm-7.0/php.ini:/usr/local/etc/php/php.ini:rw
+      - www-data:/srv/www
 
-postgres:
-  image: postgres:9.3
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  environment:
-    - POSTGRES_PASSWORD=postgres
-  ports:
-    - 5432:5432
-  volumes_from:
-    - enviroment_postgresdata_1
+  postgres:
+    environment:
+      POSTGRES_PASSWORD: postgres
+    image: postgres:9.3
+    network_mode: bridge
+    ports:
+      - 5432:5432
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - postgres-data:/var/lib/postgresql/data
 
-memcached:
-  image: memcached:1.4
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
+  rabbitmq:
+    dns:
+      - 172.17.0.1
+    image: rabbitmq:3-management
+    links:
+      - dnsdock:dnsdock
+    network_mode: bridge
+    ports:
+      - 10080:15672
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - rabbitmq-data:/var/lib/rabbitmq
 
-samba:
-  image: pro100coder/enviroment:samba
-  ports:
-   - 137:137
-   - 138:138
-   - 139:139
-   - 445:445
-  volumes_from:
-   - enviroment_sitesdata_1
-  volumes:
-   - /etc/localtime:/etc/localtime:ro
-   - ./configs/samba:/etc/samba:ro
+  samba:
+    image: pro100coder/enviroment:samba
+    network_mode: bridge
+    ports:
+      - 137:137
+      - 138:138
+      - 139:139
+      - 445:445
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./configs/samba:/etc/samba:ro
+      - www-data:/srv/www
 
-rabbitmq:
-  image: rabbitmq:3-management
-  dns: 172.17.0.1
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-  ports:
-    - 10080:15672
-  volumes_from:
-    - enviroment_rabbitmqdata_1
-  links:
-    - dnsdock:dnsdock
+  solr:
+    image: pro100coder/enviroment:solr
+    network_mode: bridge
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - solr-data:/opt/solr
 
-varnish:
-  image: pro100coder/enviroment:varnish
-  dns: 172.17.0.1
-  links:
-    - nginx:nginx
-    - dnsdock:dnsdock
-  ports:
-    - 6081:6081
-    - 6082:6082
-  volumes:
-    - /etc/localtime:/etc/localtime:ro
-    - ./configs/varnish:/etc/varnish:ro
+  varnish:
+    dns:
+      - 172.17.0.1
+    image: pro100coder/enviroment:varnish
+    links:
+      - nginx:nginx
+      - dnsdock:dnsdock
+    network_mode: bridge
+    ports:
+      - 6081:6081
+      - 6082:6082
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./configs/varnish:/etc/varnish:ro
 
-dnsdock:
-  image: tonistiigi/dnsdock
-  volumes:
-    - /var/run/docker.sock:/run/docker.sock
-    - /etc/localtime:/etc/localtime:ro
-  ports:
-    - 172.17.0.1:53:53/udp
+  ssh:
+    dns:
+      - 172.17.0.1
+    domainname: enviroment
+    image: pro100coder/enviroment:ssh
+    links:
+      - mariadb:mariadb
+      - postgres:postgres
+      - memcached:memcached
+      - solr:solr
+      - mongo:mongo
+      - rabbitmq:rabbitmq
+      - dnsdock:dnsdock
+    network_mode: bridge
+    ports:
+      - 0.0.0.0:10022:22
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./configs/ssh/php/php.ini:/etc/php/7.0/cli/php.ini:ro
+      - ./configs/ssh/php/conf.d/xdebug.ini:/etc/php/7.0/cli/conf.d/20-xdebug.ini:ro
+      - ./configs/ssh/.profile:/srv/www/.profile:ro
+      - www-data:/srv/www
+
+version: '2.0'
+volumes:
+  www-data:
+    external:
+      name: enviroment_www-data
+
+  solr-data:
+    external:
+      name: enviroment_solr-data
+
+  rabbitmq-data:
+    external:
+      name: enviroment_rabbitmq-data
+
+  postgres-data:
+    external:
+      name: enviroment_postgres-data
+
+  mongo-data:
+    external:
+      name: enviroment_mongo-data
+
+  mariadb-data:
+    external:
+      name: enviroment_mariadb-data
+
+# 8817264fe6b5422aade1d47e2339e977a1c59d02b1148954a66169385ca6d10b - mariadb
+# dca525def2872b0fb94ee9067bba906ca1b3b656e4bdb02babcc7262ed65a64e - www-data
