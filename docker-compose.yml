@@ -230,6 +230,3 @@ volumes:
   mariadb-data:
     external:
       name: enviroment_mariadb-data
-
-# 8817264fe6b5422aade1d47e2339e977a1c59d02b1148954a66169385ca6d10b - mariadb
-# dca525def2872b0fb94ee9067bba906ca1b3b656e4bdb02babcc7262ed65a64e - www-data
