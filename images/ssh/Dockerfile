@@ -63,6 +63,7 @@ RUN \
       php7.0-curl \
       php7.0-opcache \
       php7.0-igbinary \
+      php7.0-xml \
 # PHP 5
       php5-cli \
       php5-mcrypt \
