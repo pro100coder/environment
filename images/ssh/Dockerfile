@@ -64,6 +64,7 @@ RUN \
       php7.0-opcache \
       php7.0-igbinary \
       php7.0-xml \
+      php7.0-mbstring \
 # PHP 5
       php5-cli \
       php5-mcrypt \
