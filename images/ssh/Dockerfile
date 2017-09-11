@@ -65,6 +65,7 @@ RUN \
       php7.0-igbinary \
       php7.0-xml \
       php7.0-mbstring \
+      php7.0-bcmath \
 # PHP 5
       php5-cli \
       php5-mcrypt \
@@ -77,6 +78,7 @@ RUN \
       php5-gd \
       php5-mongo \
       php5-sqlite \
+      php5-bcmath \
 # phpbrew libraries
       libxml2-dev \
       libmcrypt-dev \
