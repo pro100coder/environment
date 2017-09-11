@@ -78,7 +78,6 @@ RUN \
       php5-gd \
       php5-mongo \
       php5-sqlite \
-      php5-bcmath \
 # phpbrew libraries
       libxml2-dev \
       libmcrypt-dev \
